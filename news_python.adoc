@@ -1,6 +1,6 @@
 = Quoi de n'œuf, Python ?
 
-image::assets/reptile-python-hatching-egg-820x459.jpg[width="50%", title="credits: Heiko Kiera, Shutterstock - https://www.aboutanimals.com/reptile/"]
+image::assets/reptile-python-hatching-egg-820x459.jpg[width="50%", title="source : Heiko Kiera, Shutterstock - https://www.aboutanimals.com/reptile/"]
 
 [.small]
 Lundi 7 novembre 2022 (Python Rennes)

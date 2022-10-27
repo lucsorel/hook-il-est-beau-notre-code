@@ -9,7 +9,9 @@
   * GLOBAL STYLES
   *********************************************/
  body {
-   background: #f7f2d3;
+
+   /* background: #f7f2d3; */
+   background: #a82697;
    background: -moz-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #f7f2d3));
    background: -webkit-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
@@ -283,4 +285,43 @@
 
 #_some_major_features .content {
     font-size: small;
+}
+
+/* personnalisation Python Rennes */
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  text-transform: none;
+  /* https://www.schemecolor.com/python-logo-colors.php */
+  background: linear-gradient(to right, #4B8BBE, #FFE873 40%);
+  background-position: 0 100%;
+  background-repeat: repeat-x;
+  background-size: 100% 2px;
+  text-align: left;
+}
+.reveal h1 {
+  font-size: 2em;
+  background-size: 100% 5px;
+  text-align: center;
+}
+.reveal h2 {
+  font-size: 1.2em;
+}
+.reveal h3 {
+  font-size: 1em;
+  background-size: 100% 1px;
+}
+.reveal pre {
+  width: 100%;
+}
+.reveal table {
+  border: none;
+}
+.reveal table tbody td{
+  vertical-align: middle;
+}
+.medium-text {
+  font-size: 75%;
+}
+.small-text {
+  font-size: 50%;
 }

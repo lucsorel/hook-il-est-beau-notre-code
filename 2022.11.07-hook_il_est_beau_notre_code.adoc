@@ -1,5 +1,5 @@
 //:revealjs_theme: beige
-:revealjs_customtheme: my-stylesheet.css
+:revealjs_customtheme: assets/hook_il_est_beau_notre_code.css
 :revealjs_progress: true
 :revealjs_slideNumber: true
 :source-highlighter: highlightjs
@@ -26,7 +26,7 @@ https://www.meetup.com/fr-FR/python-rennes/events/289052290/[]
 
 
 // Includes
-include::new_python.adoc[leveloffset=1]
+include::news_python.adoc[leveloffset=1]
 
 include::intro.adoc[leveloffset=1]
 
