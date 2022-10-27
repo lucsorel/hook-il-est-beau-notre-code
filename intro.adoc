@@ -1,0 +1,151 @@
+:toc:
+
+= Hook'il est beau notre code
+
+[.notes]
+--
+Proposition d'un petit sketch d'intro
+
+Luc :
+
+> Alors une nouvelle US... Hop hop, je code... Hop hop, je teste... vite fait...
+
+> Hey Jérôme, veux-tu bien relire ma PR s'il te plaît ?
+
+Jérôme :
+
+> Oui oui...
+
+> Mais, c'est n'imp' tes imports, là : tu importes un module du projet avant un module natif, ce n'est pas réglo... 
+
+> et puis là, c'est une bibliothèque tierce ! 
+
+> Comment veux-tu qu'on s'y retrouve ?!?
+
+Jérôme sors un mètre à mesurer et le pose sur l'écran
+
+> Mais dis donc, ta ligne fait plus de 120 caractères !
+> Et puis qu'est-ce que c'est que ces strings avec des guillemets doubles à côté des autres strings avec des guillemets simples. 
+> C'est tout mélangé... 
+> C'est la fête du string, c'est ça ?
+
+> Rhooo ! Et ce dictionnaire au formatage tout dégueux... Dis, ça n'est pas pour rien qu'on fait des réunions de conventions de code. Aller reformate-moi tout ça et on en reparle.
+
+Jérôme s'en va
+
+Luc : 
+
+> Mais, mais... Mais on n'a même pas parlé du code métier...
+--
+
+== Qualité de code, conventions et relectures
+
+[.notes]
+--
+Des scènes de relecture de code comme ça, il y en a plein.
+--
+
+L'objectif d'une relecture est de valider que le code rende le service métier attendu tout en assurant une robustesse et une maintenabilité du service numérique.
+
+== Comment tendre vers une base de code robuste et maintenable ?
+
+* des *conventions de code*, établies en solo ou en équipe :
+** permettent d'assurer une homogénéité 
+** facilitent l'arrivée d'une personne dans l'équipe, ou de votre futur vous
+** aident au formatage de code
+** donnent de bonnes pratiques (détection d'anti-patterns, documentation de modules ou de fonctions)
+
+== Mais aussi
+
+* des *tests automatisés* permettent d'assurer une confiance envers la base de code, constituent une forme de documentation du code (entrées et sorties de fonctions, cas d'erreur gérés)
+* le process d'*intégration continue* permet d'articuler des étapes de relecture / validation humaines (relectures de tâches unitaires, story keeping d'US complétées) avec des vérifications automatisées, du commit à la mise en production
+
+== Vérifications automatisées
+
+Que connaissez-vous comme vérifications automatisées de la qualité de code ?
+
+[%step]
+* tests automatisés
+** en contrôlant la couverture de code : pytest-cov
+** en contrôlant la conso mémoire : memray
+* analyse statique de code
+** respect de formatage : isort, black, yapf
+** détection d'antipatterns : pylint, flake8, ruff, pyperf
+
+[.notes]
+--
+L'analyse statique est souvent faite par un outil comme sonar, qui se déroule souvent une fois que le commit est parti.
+--
+
+== Et si l'analyse statique commençait au commit ?
+
+Juste avant, en fait ?
+
+[.notes]
+--
+C'est un peu dommage, on ne va pas faire une palanquée de commits pour arriver à un code satisfaisant (c'est un peu le défaut d'une mise en place d'intégration continue).
+--
+
+== Hooks git
+
+Git propose un système de hooks pour conditionner des actions classiques git à la bonne exécution d'autres programmes :
+
+* pré commit
+* pré push
+* pré rebase
+* etc.
+
+[.notes]
+--
+Un hook de pré-commit semble être le bon moment avant que l'éventuelle honte quitte l'intimité de notre poste de travail et se répande dans l'intégration continue et la production.
+--
+
+== Comment cela marche-t-il ?
+
+* sous-dossier ( ex : `.git/hooks` )
+* un script par hook
+
+[.notes]
+--
+Le fichier portera souvent le nom de l'étape concernée
+
+le contexte d'exécution de chaque script est la racine du projet git, pas `.git/hooks`
+-- 
+
+
+== Démo
+
+mini démo : initialiser un projet git, ajouter un script `.git/hooks/precommit` avec un `echo "$(pwd)"` et faire un commit
+
+[source, bash]
+----
+├─ .git
+│  └─hooks/
+│    ├─ pre-commit.sample
+│    └─ pre-commit
+
+#!/bin/sh
+echo "precommit hook launched in $(pwd)"
+
+# simulates an error code at exit
+exit 1
+----
+
+Comment partager l'intelligence projet des scripts de hooks ?
+
+* versionner `.git/hooks` dans git
+* stocker ces scripts dans un dossier `.git-hooks` (par exemple) et configurer `git` pour lui indiquer le dossier des hooks : `git config core.hooksPath ./.git-hooks`
+
+[source, bash]
+----
+├─ .git-hooks/
+│  └─ pre-commit
+
+#!/bin/sh
+echo "precommit hook launched in $(pwd)"
+
+# simulates an error code at exit
+exit 1
+----
+
+* utiliser un outil qui va gérer la tambouille-as-code entre les hooks git et les outils de vérification : `pre-commit`

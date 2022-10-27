@@ -1,0 +1,33 @@
+= Quoi de n'œuf, Python ?
+
+image::assets/reptile-python-hatching-egg-820x459.jpg[width="50%", title="credits: Heiko Kiera, Shutterstock - https://www.aboutanimals.com/reptile/"]
+
+[.small]
+Lundi 7 novembre 2022 (Python Rennes)
+
+== Python 3.11 is out!
+
+image::assets/python_3.11_is_out.png[width="50%",  title="https://www.python.org/downloads/release/python-3110/"]
+
+
+[.columns]
+== Some major features
+
+[.column]
+--
+* faster python interpreter: 10-60% faster than 3.10
+* improved Exception management (grouping except clauses, fine-grained tracebacks)
+* extended regexp syntax (now includes atomic grouping and possessive quantifiers - don't ask me!)
+--
+
+[.column]
+--
+* asyncio: introduced task groups as a context manager within which coroutines are launched and executed. The context manager ends when all coroutines are done
+* Self type annotation to get rid of fast-forward references as string: helps building fluent APIs (when setters returns the current instance of a class) for example
+--
+
+[.column]
+--
+* dataclass_transform decorator, to provide a unified approach to all @dataclass-like approaches that help ease the construction of classes
+* some advanced type annotations ("variadic generics", they call them)
+--

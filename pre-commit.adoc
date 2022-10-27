@@ -1,0 +1,126 @@
+:toc:
+= pre-commit
+
+image::assets/pre-commit-logo.png[title="https://pre-commit.com/"]
+
+
+== Config
+
+* configuration dans `.pre-commit-config.yaml` 
+* bibliothèque écrite en Python
+** bibliothèque de développement de votre projet Python
+** exécutable via une commande docker pour les autres projets (ou mono-repo)
+
+[.notes]    
+--
+* YAML, c'est donc un outil sérieux de tambouille-as-code
+
+Nous vous présentons l'utilisation de pre-commit sur un projet Python pour commencer, nous vous présenterons d'autres cas d'utilisation
+--
+
+== Les hooks natifs
+
+Voir https://pre-commit.com/hooks.html
+
+[source,yaml]
+----
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    # trims all whitespace from the end of each line
+    -   id: trailing-whitespace
+    # ensures that all files end in a newline and only a newline
+    -   id: end-of-file-fixer
+    # prevents large files from being committed (>100kb)
+    -   id: check-added-large-files
+        args: [--maxkb=100]
+    # replaces "double quotes" with 'single quotes' wherever "it's applicable"
+    -   id: double-quote-string-fixer
+----
+
+FIXME : rajouter le hook toml pour le `pyproject.toml`
+
+
+== Démo 
+
+démo d'application progressive des hooks natifs sur expylliarmus
+
+== utilisation de isort
+
+* ajout du hook dans `.pre-commit-config.yaml`
+
+[source,yaml]
+----
+-   repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.10.1
+    hooks:
+    -   id: isort
+        # required for python projects configured with a pyproject.toml file
+        additional_dependencies: [toml]
+----
+
+* ajout de la configuration
+** dans le fichier dédié (TODO Luc)
+** dans `pyproject.toml`
+
+[source, toml]
+----
+[tool.isort]
+# the line length must be specified for isort too to handle multi-line in a way compatible with yapf
+line_length = 120
+# Hanging Grid Grouped (mode 5)
+# from third_party import (
+#     lib1, lib2, lib3, lib4,
+#     lib5, etc.
+# )
+multi_line_output = 5
+balanced_wrapping = false
+# moves the imports of the local tests module in a separate section
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER", "TESTS"]
+known_tests = ["tests"]
+----
+
+== utilisation de yapf
+
+* ajout du hook dans `.pre-commit-config.yaml`
+
+[source,yaml]
+----
+-   repo: https://github.com/pre-commit/mirrors-yapf
+    rev: v0.32.0
+    hooks:
+    -   id: yapf
+        name: Yapf
+        # required for python projects configured with a pyproject.toml file
+        additional_dependencies: [toml]
+----
+
+* ajout de la configuration dans `pyproject.toml`
+
+Exemple d'une configuration où les parenthèses sont refermées à la ligne
+
+[source, toml]
+----
+[tool.yapf]
+based_on_style = "facebook"
+# see the https://github.com/google/yapf#knobs section
+COALESCE_BRACKETS = false
+COLUMN_LIMIT = 120
+DEDENT_CLOSING_BRACKETS = true
+INDENT_DICTIONARY_VALUE = false
+EACH_DICT_ENTRY_ON_SEPARATE_LINE = true
+FORCE_MULTILINE_DICT = true
+JOIN_MULTIPLE_LINES = false
+SPACES_AROUND_DEFAULT_OR_NAMED_ASSIGN = false
+SPLIT_BEFORE_CLOSING_BRACKET = true
+SPLIT_BEFORE_DICT_SET_GENERATOR = true
+SPLIT_COMPLEX_COMPREHENSION = true
+SPLIT_BEFORE_EXPRESSION_AFTER_OPENING_PAREN = true
+SPLIT_BEFORE_FIRST_ARGUMENT = true
+----
+
+Alternatives : black (volontairement sans configuration)
+
+
+== utilisation de ruff
