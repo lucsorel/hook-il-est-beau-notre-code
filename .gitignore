@@ -124,3 +124,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# do not version super-project
+super-projet/

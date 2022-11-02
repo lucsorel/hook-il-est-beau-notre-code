@@ -1,4 +1,3 @@
-//:revealjs_theme: beige
 :revealjs_customtheme: assets/hook_il_est_beau_notre_code.css
 :revealjs_progress: true
 :revealjs_slideNumber: true
@@ -89,14 +88,7 @@ repos:
 
 ----
 
-=== si pre-commit est utilisé pour tout le mono-repo
-
-?
-
-- peut-on utiliser un filtre files à l'échelle de chaque repo ?
-
-
-La commande du mal :
+== La commande du mal :
 
 [source,bash]
 ----

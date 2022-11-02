@@ -1,6 +1,18 @@
 :toc:
 
-= Hook'il est beau notre code
+= Qualité de code - du commit à la prod'
+
+[%notitle]
+== Quelque part dans un openspace de la startup nation...
+
+image::assets/rideau_théâtre-jaune.jpg[background, size=cover]
+
+[quote]
+--
+_Quelque part dans un openspace_
+
+_de la startup nation..._
+--
 
 [.notes]
 --
@@ -40,37 +52,111 @@ Luc :
 
 == Qualité de code, conventions et relectures
 
+Pourquoi nous relisons-nous ?
+
+[%step]
+* le code doit rendre le service métier attendu
+* perpétuer la robustesse et la maintenabilité du service numérique
+
 [.notes]
 --
+Qui a déjà vécu une scène similaire ?
+
 Des scènes de relecture de code comme ça, il y en a plein.
---
 
 L'objectif d'une relecture est de valider que le code rende le service métier attendu tout en assurant une robustesse et une maintenabilité du service numérique.
+--
 
-== Comment tendre vers une base de code robuste et maintenable ?
 
-* des *conventions de code*, établies en solo ou en équipe :
-** permettent d'assurer une homogénéité 
-** facilitent l'arrivée d'une personne dans l'équipe, ou de votre futur vous
-** aident au formatage de code
-** donnent de bonnes pratiques (détection d'anti-patterns, documentation de modules ou de fonctions)
+== Vers une base de code robuste et maintenable 1/
 
-== Mais aussi
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] base de code\nrobuste & maintenable
+++[#yellow] conventions de code
++++ homogénéité
+++++ de style
++++++ formatage
++++++ docstring
+++++ de (bonnes) pratiques
++++ intégration facile
+++++ de nouvelles personnes
+++++ de votre futur vous
+@endmindmap
+----
 
-* des *tests automatisés* permettent d'assurer une confiance envers la base de code, constituent une forme de documentation du code (entrées et sorties de fonctions, cas d'erreur gérés)
-* le process d'*intégration continue* permet d'articuler des étapes de relecture / validation humaines (relectures de tâches unitaires, story keeping d'US complétées) avec des vérifications automatisées, du commit à la mise en production
+[.notes]
+--
+* de style : formatage, docstring
+* bonnes pratiques : erreurs courantes comme des pb d'encodage non spécifiés, détection d'anti-patterns, documentation manquante de modules ou de fonctions
+* nouvelle personne : ou vous dans 3 mois
+--
+
+== Vers une base de code robuste et maintenable 2/
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] base de code\nrobuste & maintenable
+--[#lightyellow] conventions de code
+--- homogénéité
+---- de style
+----- formatage
+----- docstring
+---- de (bonnes) pratiques
+--- intégration facile
+---- de nouvelles personnes
+---- de votre futur vous
+++[#yellow] tests automatisés
++++ confiance dans la base de code
++++ documente l'utilisation du code
+@endmindmap
+----
+
+[.notes]
+--
+* documentation : entrées et sorties de fonctions, cas d'erreur gérés
+--
+
+== Vers une base de code robuste et maintenable 3/
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] base de code\nrobuste & maintenable
+--[#lightyellow] conventions de code
+--- homogénéité
+---- de style
+----- formatage
+----- docstring
+---- de (bonnes) pratiques
+--- intégration facile
+---- de nouvelles personnes
+---- de votre futur vous
+++[#yellow] intégration continue
++++ validations humaines
+++++ relecture de tâches
+++++ story keeping de user stories
++++[#lightgreen] vérifications automatisées
+++[#lightyellow] tests automatisés
++++ confiance dans la base de code
++++ documente l'utilisation du code
+@endmindmap
+----
 
 == Vérifications automatisées
 
 Que connaissez-vous comme vérifications automatisées de la qualité de code ?
 
+
 [%step]
 * tests automatisés
-** en contrôlant la couverture de code : pytest-cov
-** en contrôlant la conso mémoire : memray
+** en contrôlant la couverture de code : `pytest-cov`
+** en contrôlant la conso mémoire : `memray`
 * analyse statique de code
-** respect de formatage : isort, black, yapf
-** détection d'antipatterns : pylint, flake8, ruff, pyperf
+** respect de formatage : `isort`, `black`, `yapf`
+** détection d'antipatterns : `pylint`, `flake8`, `ruff`, `perflint`
 
 [.notes]
 --
@@ -79,73 +165,69 @@ L'analyse statique est souvent faite par un outil comme sonar, qui se déroule s
 
 == Et si l'analyse statique commençait au commit ?
 
-Juste avant, en fait ?
+_(juste avant, en fait...)_
 
 [.notes]
 --
 C'est un peu dommage, on ne va pas faire une palanquée de commits pour arriver à un code satisfaisant (c'est un peu le défaut d'une mise en place d'intégration continue).
 --
 
-== Hooks git
+== Les hooks git
 
-Git propose un système de hooks pour conditionner des actions classiques git à la bonne exécution d'autres programmes :
+Conditionne une action git "classique" à la bonne exécution d'un script.
 
-* pré commit
-* pré push
-* pré rebase
-* etc.
+[source,text]
+----
+super-projet
+  ├─ .git
+  │  └─ hooks/
+  │     ├─ commit-msg.sample
+  │     ├─ pre-commit.sample 👀
+  │     ├─ pre-push.sample
+  │     ├─ pre-receive.sample
+  │     └─ ...
+----
+
+
+* retirer `.sample` pour activer le hook
+* le contexte d'exécution est la racine du projet git, pas `.git/hooks`
 
 [.notes]
 --
 Un hook de pré-commit semble être le bon moment avant que l'éventuelle honte quitte l'intimité de notre poste de travail et se répande dans l'intégration continue et la production.
 --
 
-== Comment cela marche-t-il ?
+== Example de hook de pre-commit
 
-* sous-dossier ( ex : `.git/hooks` )
-* un script par hook
-
-[.notes]
---
-Le fichier portera souvent le nom de l'étape concernée
-
-le contexte d'exécution de chaque script est la racine du projet git, pas `.git/hooks`
--- 
-
-
-== Démo
-
-mini démo : initialiser un projet git, ajouter un script `.git/hooks/precommit` avec un `echo "$(pwd)"` et faire un commit
 
 [source, bash]
 ----
-├─ .git
-│  └─hooks/
-│    ├─ pre-commit.sample
-│    └─ pre-commit
-
+# 📄 .git/hooks/pre-commit
 #!/bin/sh
-echo "precommit hook launched in $(pwd)"
+echo "Pre-commit hook launched in $(pwd)"
 
 # simulates an error code at exit
 exit 1
 ----
 
-Comment partager l'intelligence projet des scripts de hooks ?
-
-* versionner `.git/hooks` dans git
-* stocker ces scripts dans un dossier `.git-hooks` (par exemple) et configurer `git` pour lui indiquer le dossier des hooks : `git config core.hooksPath ./.git-hooks`
-
 [source, bash]
 ----
-├─ .git-hooks/
-│  └─ pre-commit
+mkdir super-projet
+cd super-projet
+git init -b main
+git config ...
 
-#!/bin/sh
-echo "precommit hook launched in $(pwd)"
-
-# simulates an error code at exit
-exit 1
+git touch test
+git add test
+git status
+git commit -m "🎉"
+git status
 ----
 
-* utiliser un outil qui va gérer la tambouille-as-code entre les hooks git et les outils de vérification : `pre-commit`
+== Comment mutualiser les hooks ?
+
+[%step]
+* créer un dossier contenant les hooks (`.git_hooks`, par exemple)
+** 👎 faire un lien symbolique entre `.git_hooks` et .git/hooks
+** 👍 OU configurer git pour y chercher les hooks : `git config core.hooksPath ./.git_hooks`
+* 👍👍 utiliser un outil qui va gérer la _tambouille-as-code_ entre les hooks git et les outils de vérification : `pre-commit`
