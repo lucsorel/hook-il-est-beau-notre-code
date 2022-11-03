@@ -230,4 +230,4 @@ git status
 * créer un dossier contenant les hooks (`.git_hooks`, par exemple)
 ** 👎 faire un lien symbolique entre `.git_hooks` et .git/hooks
 ** 👍 OU configurer git pour y chercher les hooks : `git config core.hooksPath ./.git_hooks`
-* 👍👍 utiliser un outil qui va gérer la _tambouille-as-code_ entre les hooks git et les outils de vérification : `pre-commit`
+* 👍👍 utiliser un outil qui va gérer la _tambouille_ entre les hooks git et les outils de vérification : `pre-commit`

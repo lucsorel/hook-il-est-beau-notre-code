@@ -31,6 +31,8 @@ include::intro.adoc[leveloffset=1]
 
 include::pre-commit.adoc[leveloffset=1]
 
+include::usage-projet_python.adoc[leveloffset=1]
+
 
 == Autres cas d'application
 
@@ -46,101 +48,9 @@ Y a-t-il des (gens ayant des pratiques) devops dans la salle ? Ah, c'est pour ç
 TODO à compléter (Jérôme ?)
 
 
-== mono-repo
 
-Rappels :
+include::usage-mono_repo.adoc[leveloffset=1]
 
-* pre-commit utilise la mécanique des hooks git
-* le dossier de travail des hooks est donc la racine du mono-repo
+include::usage-intégration_continue.adoc[leveloffset=1]
 
-
-=== Si pre-commit n'est utilisé que par les sous-projets Python
-
-* utiliser des `Makefile`s avec une commande `make lint` racine qui appelle les `make lint` de chaque sous-projet
-* le `make lint` du projet Python lance pre-commit
-
-[source, Makefile]
-----
-lint:
-# verifies that there are modified files in the sub-project
-ifneq ($(shell git diff-index --quiet HEAD ./; echo $$?), 0)
-# uses the docker command for non-python dev environment
-  TODO Jérôme
-# uses the python tooling (for a mono-repo of python sub-projects)
-  poetry run pre-commit run --all-files
-endif
-----
-
-[source,yaml]
-----
-files: ^a-python-subproject/
-
-repos:
--   repo: https://github.com/pre-commit/mirrors-yapf
-    rev: v0.32.0
-    hooks:
-    -   id: yapf
-        name: Yapf
-        # this dependency is necessary if the python project is configured with a pyproject.toml
-        additional_dependencies: [toml]
-        # goes in the sub-project and checks the format of the production and test code
-        entry: sh -c "cd a-python-subproject && yapf --in-place -vv --recursive a_python_subproject tests"
-
-----
-
-== La commande du mal :
-
-[source,bash]
-----
-git commit --no-verify -m "ahahaha ! :smiley-evil:"
-----
-
--> lancer les hooks dans l'intégration continue aussi
-
-Nécessite que :
-
-* le projet manipulé par le serveur soit un projet git, pre-commit repose vraiment sur les hooks git
-* git soit installé sur le serveur
-
-[source,bash]
-----
-apt-get install --no-install-recommends -y git
-cd my-project
-git init .
-git add -A
-poetry run pre-commit run --all-files
-----
-
-== Méthodologie
-
-* discuter les règles de formatage en équipe (communautés de pratiques Python)
-** nuancer les règles indispensable et celles de goût
-** adapter au besoin métier (tests unitaires de TLN -> guillemets doubles)
-** tester les règles sur la base de code puis discuter les différences obtenues en équipe
-** accepter les compromis faits par yapf : il y aura des cas où le résultat ne sera pas foufou, le but est de tendre vers une homogénéité de la base de code
-
-
-== Conclusions
-
-image::assets/Pensieve_merged_black-blueish.png[]
-
-* toute convention qui n'est pas mise en oeuvre (vérifiable, mieux : applicable) par un outil n'est que parole en l'air et sera oubliée
-* activation et configuration des hooks via des fichiers déclaratifs (`.pre-commit-config.yaml` et les fichiers de configuration habituels des outils ou du projet)
-* les IDE repèrent les configurations et guident l'écriture du code AVANT le commit (utile pour la détection d'antipatterns)
-* pas besoin d'écrire du shell (sauf un peu pour les mono-repos, où c'est souvent inévitable)
-* grande diversité de hooks natifs à pre-commit pour les problématiques transverses ou classiques (trailing-whitespace, end-of-file-fixer, check-added-large-files, double-quote-string-fixer, etc.)
-
-* les outils de formatage de code (isort, yapf, black, etc.) doivent avoir des configurations compatibles (nombre de caractères max par ligne)
-* désactiver la vérification de longueur max de lignes dans les outils de lint (pylint, ruff), les outils de formatage s'en occupent (du mieux qu'ils peuvent)
-
-* ceinture (pré commit) et bretelles (intégration continue) sur la qualité de code
-* la ceinture peut être fragile
-** `pre-commit install` doit être faite sur chaque poste de développement (projet python ; commande docker équivalente pour un projet dans un autre langage)
-** ou reconfiguration du chemin des hooks git (mono-repo)
-
-
-* les bretelles (intégration continue) nécessitent que le projet soit `git`ifié
-
-
-* les outils de qualité de code Python ont fait la démarche pour être activables via pre-commit
-* mais aussi d'autres (eslint, à compléter)
+include::conclusions.adoc[leveloffset=1]
