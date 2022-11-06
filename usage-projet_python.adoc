@@ -110,7 +110,7 @@ per-file-ignores = {
 == Méthodologie
 
 [%step]
-Discuter les règles de formatage en équipe (communautés de pratiques Python)
+* Discuter les règles de formatage en équipe (communautés de pratiques Python)
 * nuancer les règles indispensable et celles de goût
 * adapter au besoin métier (tests unitaires de TLN -> guillemets doubles)
 * tester les règles sur la base de code puis discuter les différences obtenues en équipe

@@ -42,9 +42,9 @@ Bibliothèque écrite en Python
 
 * bibliothèque de développement de votre projet Python
 * ou exécutable via une commande `docker`
-* configuration dans `.pre-commit-config.yaml` 
+* configuration dans `.pre-commit-config.yaml`
 
-[.notes]    
+[.notes]
 --
 * YAML, c'est donc un outil sérieux de tambouille-as-code
 
@@ -73,7 +73,8 @@ repos:
     -   id: double-quote-string-fixer
 ----
 
-Voir https://pre-commit.com/hooks.html.
+Voir https://pre-commit.com/hooks.html[]
+
 
 == Commandes
 
@@ -92,4 +93,4 @@ pre-commit run end-of-file-fixer --all-files
 pre-commit autoupdate
 ----
 
-Voir https://pre-commit.com/#usage.
+Voir https://pre-commit.com/#usage[]

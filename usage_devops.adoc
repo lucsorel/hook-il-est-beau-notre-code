@@ -1,0 +1,75 @@
+:toc:
+
+= Autres cas d'application
+
+Y a-t-il des (gens ayant des pratiques) devops dans la salle ?
+
+[.notes]
+--
+Pas encore tout le monde ... c'est pas grave, vous y viendrez !
+--
+
+[.columns]
+== A quoi peut servir pre-commit
+
+[.column]
+--
+* trailing-whitespace
+* end-of-file-fixer
+* pretty-format-json
+* check-added-large-files
+* check-merge-conflict
+* check-executables-have-shebangs
+--
+
+[.column]
+--
+* check-case-conflict
+* mixed-line-ending
+* detect-aws-credentials
+* detect-private-key
+* check-json
+* check-yaml
+* ...
+--
+
+== Hook Custom
+
+* 📁 Projet Python
+** 📄 `setup.cfg` pour décrire le package
+** 📄 `setup.py` pour construire le package
+** 📁Un répertoire pour notre hook
+*** 📄 `__init__.py` pour avoir un package
+*** 📄 `main.py` le code de notre hook
+* un repo git
+
+Exemple de https://github.com/pre-commit/pre-commit-hooks/blob/main/pre_commit_hooks/check_json.py[check_json,window=_blank]
+
+
+
+== Infrastucture as code
+
+https://github.com/antonbabenko/pre-commit-terraform[pre-commit-terraform]
+
+[source,yaml]
+--
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.3.0
+  hooks:
+    ......
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.76.0
+  hooks:
+    - id: terraform_fmt
+    - id: terraform_docs
+      args:
+        - --args=--config=.terraform-docs.yaml
+    - id: terraform_tflint
+    - id: terraform_tfsec
+      args:
+        - >
+          --args=--format json
+          -e google-iam-no-project-level-service-account-impersonation,google-storage-enable-ubla,google-storage-bucket-encryption-customer-key,google-dns-enable-dnssec
+
+--
