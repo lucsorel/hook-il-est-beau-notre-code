@@ -10,7 +10,7 @@ git commit --no-verify -m "🥷 ahahaha !"
 
 -> lancer les hooks dans l'intégration continue aussi
 
-== Étape de lint dans l'intégration continue 1/
+== Étape de lint dans l'intégration continue 1/2
 
 Pre-commit repose sur git :
 
@@ -27,7 +27,7 @@ poetry run pre-commit run --all-files
 ----
 
 
-== Étape de lint dans l'intégration continue 2/
+== Étape de lint dans l'intégration continue 2/2
 
 Ou avec Docker
 

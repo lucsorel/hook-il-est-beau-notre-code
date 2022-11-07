@@ -1,7 +1,7 @@
 :toc:
 = Démo sur un projet Python
 
-Application progressive des hooks natifs sur expylliarmus
+Application progressive des hooks sur https://github.com/lucsorel/python-for-the-muggle-born-developer/tree/main/expylliarmus[expylliarmus]
 
 == Tri des imports avec isort 1/2
 
@@ -24,7 +24,7 @@ Configuration de isort dans `pyproject.toml` :
 [source, toml]
 ----
 [tool.isort]
-# the line length must be specified for isort too to handle multi-line in a way compatible with yapf
+# le nombre de caractères max par ligne doit être spécifié ici aussi, et être compatible avec le formateur de code
 line_length = 120
 # Hanging Grid Grouped (mode 5)
 # from third_party import (
@@ -33,7 +33,7 @@ line_length = 120
 # )
 multi_line_output = 5
 balanced_wrapping = false
-# moves the imports of the local tests module in a separate section
+# TESTS->known_tests : crée une section spécifique d'imports concernant le contenu des dossiers de test
 sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER", "TESTS"]
 known_tests = ["tests"]
 ----
@@ -61,7 +61,7 @@ Configuration de yapf (dans `pyproject.toml`) où les parenthèses sont refermé
 ----
 [tool.yapf]
 based_on_style = "facebook"
-# see the https://github.com/google/yapf#knobs section
+# voir la section https://github.com/google/yapf#knobs
 COALESCE_BRACKETS = false
 COLUMN_LIMIT = 120
 DEDENT_CLOSING_BRACKETS = true
@@ -77,23 +77,22 @@ SPLIT_BEFORE_EXPRESSION_AFTER_OPENING_PAREN = true
 SPLIT_BEFORE_FIRST_ARGUMENT = true
 ----
 
-Alternatives : black (volontairement sans configuration)
+Alternatives : https://github.com/psf/black/blob/main/docs/integrations/source_version_control.md[black] (formateur volontairement sans configuration)
 
 
 == Analyse de pratiques avec ruff 1/2
 
 [source,yaml]
 ----
-repos:
-  - repo: https://github.com/charliermarsh/ruff-pre-commit
+-   repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: v0.0.95
     hooks:
-      - id: ruff
+    -   id: ruff
 ----
 
 == Analyse de pratiques avec ruff 2/2
 
-Configuration de isort dans `pyproject.toml` :
+Configuration de ruff dans `pyproject.toml` :
 
 [source, toml]
 ----
@@ -101,17 +100,16 @@ Configuration de isort dans `pyproject.toml` :
 line-length = 120
 select = ["E", "F"]
 ignore = ["E501"]
-per-file-ignores = {
-    "__init__.py" = ["F401"],
-    "path/to/file.py" = ["F401"]
-}
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+"path/to/file.py" = ["F401"]
 ----
 
 == Méthodologie
 
 [%step]
-* Discuter les règles de formatage en équipe (communautés de pratiques Python)
+* discuter les règles de formatage en équipe (communautés de pratiques Python)
 * nuancer les règles indispensables et celles de goût
 * adapter au besoin métier (tests unitaires de TLN -> guillemets doubles)
 * tester les règles sur la base de code puis discuter les différences obtenues en équipe
-* accepter les compromis faits par yapf : il y aura des cas où le résultat ne sera pas foufou, le but est de tendre vers une homogénéité de la base de code
+* accepter les compromis faits par le formateur : il y aura des cas où le résultat ne sera pas foufou, le but est de tendre vers une homogénéité de la base de code

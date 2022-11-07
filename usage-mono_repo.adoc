@@ -17,7 +17,6 @@ Rappels :
 lint:
 # vérifie qu'il y a des fichiers modifiés dans le sous-projet
 ifneq ($(shell git diff-index --quiet HEAD ./; echo $$?), 0)
-# commande Python sinon
   poetry run pre-commit run --all-files
 endif
 ----
@@ -36,6 +35,7 @@ repos:
         name: Yapf
         # this dependency is necessary if the python project is configured with a pyproject.toml
         additional_dependencies: [toml]
-        # goes in the sub-project and checks the format of the production and test code
-        entry: sh -c "cd a-python-subproject && yapf --in-place -vv --recursive a_python_subproject tests"
+        # goes in the sub-project and checks the format of the production and test codes
+        entry: sh -c "cd a-python-subproject \
+            && yapf --in-place -vv --recursive a_python_subproject tests"
 ----
