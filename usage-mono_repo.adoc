@@ -17,8 +17,6 @@ Rappels :
 lint:
 # vérifie qu'il y a des fichiers modifiés dans le sous-projet
 ifneq ($(shell git diff-index --quiet HEAD ./; echo $$?), 0)
-# commande docker pour les environnements sans Python
-  TODO Jérôme
 # commande Python sinon
   poetry run pre-commit run --all-files
 endif

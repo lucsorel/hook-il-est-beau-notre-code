@@ -33,21 +33,7 @@ include::pre-commit.adoc[leveloffset=1]
 
 include::usage-projet_python.adoc[leveloffset=1]
 
-
-== Autres cas d'application
-
-Vérification de syntaxe de fichiers : json, yaml, toml
-
-Y a-t-il des (gens ayant des pratiques) devops dans la salle ? Ah, c'est pour ça que je vois tant d'yeux qui pétillent.
-
-
-=== Infrastucture as code
-
-* syntaxe yaml
-
-TODO à compléter (Jérôme ?)
-
-
+include::usage_devops.adoc[leveloffset=1]
 
 include::usage-mono_repo.adoc[leveloffset=1]
 

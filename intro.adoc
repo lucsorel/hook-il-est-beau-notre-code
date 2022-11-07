@@ -28,24 +28,24 @@ Jérôme :
 
 > Oui oui...
 
-> Mais, c'est n'imp' tes imports, là : tu importes un module du projet avant un module natif, ce n'est pas réglo... 
+> Mais, c'est n'imp' tes imports, là : tu importes un module du projet avant un module natif, ce n'est pas réglo...
 
-> et puis là, c'est une bibliothèque tierce ! 
+> et puis là, c'est une bibliothèque tierce !
 
 > Comment veux-tu qu'on s'y retrouve ?!?
 
 Jérôme sors un mètre à mesurer et le pose sur l'écran
 
 > Mais dis donc, ta ligne fait plus de 120 caractères !
-> Et puis qu'est-ce que c'est que ces strings avec des guillemets doubles à côté des autres strings avec des guillemets simples. 
-> C'est tout mélangé... 
+> Et puis qu'est-ce que c'est que ces strings avec des guillemets doubles à côté des autres strings avec des guillemets simples.
+> C'est tout mélangé...
 > C'est la fête du string, c'est ça ?
 
 > Rhooo ! Et ce dictionnaire au formatage tout dégueux... Dis, ça n'est pas pour rien qu'on fait des réunions de conventions de code. Aller reformate-moi tout ça et on en reparle.
 
 Jérôme s'en va
 
-Luc : 
+Luc :
 
 > Mais, mais... Mais on n'a même pas parlé du code métier...
 --

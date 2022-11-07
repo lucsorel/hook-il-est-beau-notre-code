@@ -10,7 +10,7 @@ git commit --no-verify -m "🥷 ahahaha !"
 
 -> lancer les hooks dans l'intégration continue aussi
 
-== Étape de lint dans l'intégration continue
+== Étape de lint dans l'intégration continue 1/
 
 Pre-commit repose sur git :
 
@@ -25,3 +25,13 @@ git init .
 git add -A
 poetry run pre-commit run --all-files
 ----
+
+
+== Étape de lint dans l'intégration continue 1/
+
+Ou avec Docker
+
+[source,bash]
+--
+docker run --rm -v $(pwd):/data fxinnovation/pre-commit run -a
+--

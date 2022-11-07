@@ -127,3 +127,6 @@ dmypy.json
 
 # do not version super-project
 super-projet/
+
+# Asciidoc
+.asciidoctor
