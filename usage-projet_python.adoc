@@ -111,7 +111,7 @@ per-file-ignores = {
 
 [%step]
 * Discuter les règles de formatage en équipe (communautés de pratiques Python)
-* nuancer les règles indispensable et celles de goût
+* nuancer les règles indispensables et celles de goût
 * adapter au besoin métier (tests unitaires de TLN -> guillemets doubles)
 * tester les règles sur la base de code puis discuter les différences obtenues en équipe
 * accepter les compromis faits par yapf : il y aura des cas où le résultat ne sera pas foufou, le but est de tendre vers une homogénéité de la base de code

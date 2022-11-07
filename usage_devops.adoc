@@ -10,7 +10,7 @@ Pas encore tout le monde ... c'est pas grave, vous y viendrez !
 --
 
 [.columns]
-== A quoi peut servir pre-commit
+== À quoi peut servir pre-commit ?
 
 [.column]
 --
