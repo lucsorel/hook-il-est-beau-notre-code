@@ -27,7 +27,7 @@ poetry run pre-commit run --all-files
 ----
 
 
-== Étape de lint dans l'intégration continue 1/
+== Étape de lint dans l'intégration continue 2/
 
 Ou avec Docker
 
