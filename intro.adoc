@@ -68,7 +68,7 @@ L'objectif d'une relecture est de valider que le code rende le service métier a
 --
 
 
-== Vers une base de code robuste et maintenable 1/
+== Vers une base de code robuste et maintenable 1/3
 
 [plantuml, target=mindmap-diagram, format=svg]
 ----
@@ -93,7 +93,7 @@ L'objectif d'une relecture est de valider que le code rende le service métier a
 * nouvelle personne : ou vous dans 3 mois
 --
 
-== Vers une base de code robuste et maintenable 2/
+== Vers une base de code robuste et maintenable 2/3
 
 [plantuml, target=mindmap-diagram, format=svg]
 ----
@@ -119,7 +119,7 @@ L'objectif d'une relecture est de valider que le code rende le service métier a
 * documentation : entrées et sorties de fonctions, cas d'erreur gérés
 --
 
-== Vers une base de code robuste et maintenable 3/
+== Vers une base de code robuste et maintenable 3/3
 
 [plantuml, target=mindmap-diagram, format=svg]
 ----

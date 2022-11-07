@@ -14,8 +14,7 @@
 [.small]
 *Jérôme Marchand* (icon:twitter[]@Neken13 )
 
-
-image::assets/2022.11.07-hook_il_est_beau_notre_code.jpg[width="40%"]
+image::assets/2022.11.07-hook_il_est_beau_notre_code.jpg[width="40%", title="Hook'il est beau notre code !"]
 
 [.small]
 Lundi 7 novembre 2022

@@ -5,29 +5,138 @@ image::assets/reptile-python-hatching-egg-820x459.jpg[width="50%", title="source
 [.small]
 Lundi 7 novembre 2022 (Python Rennes)
 
-== Python 3.11 is out!
+== 🎉 Python 3.11 est sorti !
 
-image::assets/python_3.11_is_out.png[width="50%",  title="https://www.python.org/downloads/release/python-3110/"]
+image::assets/python_3.11_is_out.png[width="30%",  title="https://www.python.org/downloads/release/python-3110/"]
+
+Plus de détails :
+
+* https://www.docstring.fr/blog/les-nouveautes-de-python-311/[Les nouveautés de Python 3.11 - docstring]
+* https://realpython.com/python311-new-features/[Cool New Features for You to Try - RealPython]
 
 
 [.columns]
-== Some major features
+== Python 3.11 - Quelques nouveautés importantes
 
 [.column]
 --
-* faster python interpreter: 10-60% faster than 3.10
-* improved Exception management (grouping except clauses, fine-grained tracebacks)
-* extended regexp syntax (now includes atomic grouping and possessive quantifiers - don't ask me!)
---
-
-[.column]
---
-* asyncio: introduced task groups as a context manager within which coroutines are launched and executed. The context manager ends when all coroutines are done
-* Self type annotation to get rid of fast-forward references as string: helps building fluent APIs (when setters returns the current instance of a class) for example
+* interpréteur 10-60% + rapide
+* temps de démarrage 10% + rapide
+* `-> Self:` pour des API _fluent_
 --
 
 [.column]
 --
-* dataclass_transform decorator, to provide a unified approach to all @dataclass-like approaches that help ease the construction of classes
-* some advanced type annotations ("variadic generics", they call them)
+* + de généricité dans les typages
+* exceptions
+** lancement groupé d'exception
+** `ve.add_note('...')`
+** stack-trace plus explicite
 --
+
+[.column]
+--
+* asyncio: context manager avec un groupe de tâches
+* @dataclass_transform pour unifier les approches @dataclass-like
+* regexp inclut le _groupage atomique_ et les _quantifieurs possessifs_ 😬
+--
+
+== 🎉 Sortie de Poetry 1.2.0
+
+image::assets/poetry-logo-origami.svg[width="30%", title="https://python-poetry.org/blog/announcing-poetry-1.2.0/"]
+
+
+== Poetry 1.2.0 - Nouveautés cassantes
+
+* nouvel installeur
+
+[source,bash]
+----
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py \
+    | python3 - --uninstall
+
+curl -sSL https://install.python-poetry.org | python3 -
+----
+* abandon du support des projets 2.7
+
+* https://github.com/python-poetry/poetry/issues/6301#issuecomment-1285538628[utilisation exclusive de sha256] (abandon des hashs md5)
+** si pypiserver privé : voir https://github.com/pypiserver/pypiserver/issues/452#issuecomment-1296832222[redémarrer un pypiserver et regénérer des hashs sha256]
+** si nexus privé : voir https://issues.sonatype.org/browse/NEXUS-24127[Nexus - PyPI repos should provide SHA256 hashes in /simple web interface]
+
+== Poetry 1.2.0 - Groupes de dépendances
+
+Déclaration des groupes dans `pyproject.toml` :
+[source,toml]
+----
+# legacy [tool.poetry.dev-dependencies] -> [tool.poetry.group.dev.dependencies]
+[tool.poetry.group.test.dependencies]
+pytest = "^7.1.0"
+pytest-cov = "^4.0.0"
+
+[tool.poetry.group.profiling.dependencies]
+optional = true
+pyinstrument = "^4.4.0"
+memray = "^1.4.0"
+----
+
+Utilisation des groupes :
+
+[source,bash]
+----
+# ajout d'une dépendance dans un groupe spécifié
+poetry add pytest-mock --group test
+
+# installation de dépendances optionnelles
+poetry install --with profiling,docs
+
+# installation sans dépendances obligatoires
+poetry install --without test
+----
+
+== Poetry 1.2.0 - Autres nouveautés
+
+* système de plugins
+* installation sans mettre à jour les dépendances transitives
+
+[source,bash]
+----
+poetry install --sync
+----
+
+* utilisation du binaire `python` local pour l'environnement virtuel
+
+[source,bash]
+----
+poetry config --local virtualenvs.prefer-active-python true
+pyenv local 3.11.0
+poetry install
+----
+
+== Vérifications de dépendances - deptry
+
+https://fpgmaas.github.io/deptry/
+
+[source,bash]
+----
+poetry add --group dev deptry
+
+deptry .
+----
+
+== Tendances de popularité des bibliothèques - piptrends
+
+https://piptrends.com/compare/pre-commit-vs-yapf-vs-black-vs-pylint-vs-ruff
+
+== Analyse de qualité de code
+
+* refurb (nécessite Python 3.10+) : https://github.com/dosisod/refurb
+* ruff (un linter Python ⚡️-rapide écrit en rust) : https://pypi.org/project/ruff/
+
+image::assets/ruff-benchmark.svg[width="60%"]
+
+
+== Cette veille est collaborative
+
+D'autres nouvelles ?
+
+Merci pour vos contributions 🙂
