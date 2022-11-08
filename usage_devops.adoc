@@ -39,7 +39,7 @@ Pas encore tout le monde ... c'est pas grave, vous y viendrez !
 ** 📄 `setup.cfg` pour décrire le package
 ** 📄 `setup.py` pour construire le package
 ** 📁Un répertoire pour notre hook
-*** 📄 `__init__.py` pour avoir un package
+*** 📄 `$$__init__$$.py` pour avoir un package
 *** 📄 `main.py` le code de notre hook
 * un repo git
 
