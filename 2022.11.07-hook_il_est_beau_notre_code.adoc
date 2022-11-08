@@ -1,0 +1,41 @@
+:revealjs_customtheme: assets/hook_il_est_beau_notre_code.css
+:revealjs_progress: true
+:revealjs_slideNumber: true
+:source-highlighter: highlightjs
+:icons: font
+:toc:
+
+= Hook' il est beau notre code !
+
+== Python Rennes
+
+[.small]
+*Luc Sorel-Giffo* (icon:twitter[]@lucsorel )
+[.small]
+*Jérôme Marchand* (icon:twitter[]@Neken13 )
+
+image::assets/2022.11.07-hook_il_est_beau_notre_code.jpg[width="40%", title="Hook'il est beau notre code !"]
+
+[.small]
+Lundi 7 novembre 2022
+
+[.small]
+https://www.meetup.com/fr-FR/python-rennes/events/289052290/[]
+
+
+// Includes
+include::news_python.adoc[leveloffset=1]
+
+include::intro.adoc[leveloffset=1]
+
+include::pre-commit.adoc[leveloffset=1]
+
+include::usage-projet_python.adoc[leveloffset=1]
+
+include::usage_devops.adoc[leveloffset=1]
+
+include::usage-mono_repo.adoc[leveloffset=1]
+
+include::usage-intégration_continue.adoc[leveloffset=1]
+
+include::conclusions.adoc[leveloffset=1]

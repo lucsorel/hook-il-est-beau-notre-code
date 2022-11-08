@@ -1,0 +1,96 @@
+:toc:
+[.columns]
+= pre-commit
+
+[.column.is-one-fifth]
+--
+image::assets/pre-commit-logo.png[title="https://pre-commit.com/"]
+--
+
+[.column]
+--
+_A framework for managing and maintaining multi-language pre-commit hooks._
+
+* open-source (MIT license)
+* 9.1k ⭐
+* 84 releases
+--
+
+== Tambouille-as-code
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] pre-commit
+--[#lightyellow] framework
+--- hooks
+---- encapsulage d'outils existants
+---- construction de hooks sur mesure
+--- configuration déclarative
+---- de pre-commit
+---- de chaque hook
+++[#lightyellow] API ligne de commande
++++ lancement des hooks à la demande
+++[#lightyellow] repose sur git
++++ applique les hooks sur les fichiers modifiés
++++ peut gérer d'autres hooks (merge, push, etc.)
++++ gère le lien avec .git/hooks
+@endmindmap
+----
+
+Bibliothèque écrite en Python
+
+* bibliothèque de développement de votre projet Python
+* ou exécutable via une commande `docker`
+* configuration dans `.pre-commit-config.yaml`
+
+[.notes]
+--
+* YAML, c'est donc un outil sérieux de tambouille-as-code
+
+Nous vous présentons l'utilisation de pre-commit sur un projet Python pour commencer, nous vous présenterons d'autres cas d'utilisation
+--
+
+== Les hooks natifs
+
+[source,yaml]
+----
+# 📄 .pre-commit-config.yaml
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    # verifies the syntax of toml files
+    -   id: check-toml
+    # trims all whitespace from the end of each line
+    -   id: trailing-whitespace
+    # ensures that all files end in a newline and only a newline
+    -   id: end-of-file-fixer
+    # prevents large files from being committed (>100kb)
+    -   id: check-added-large-files
+        args: [--maxkb=100]
+    # replaces "double quotes" with 'single quotes' wherever "it's applicable"
+    -   id: double-quote-string-fixer
+----
+
+Voir https://pre-commit.com/hooks.html[]
+
+
+== Commandes
+
+[source,bash]
+----
+# câblage avec git (génère le script .git/hooks/pre-commit)
+pre-commit install
+
+# lance tous les hooks sur tous les fichiers
+pre-commit run --all-files
+
+# lance un hook sur tous les fichiers
+pre-commit run end-of-file-fixer --all-files
+
+# met à jour les hooks natifs
+pre-commit autoupdate
+----
+
+Voir https://pre-commit.com/#usage[]

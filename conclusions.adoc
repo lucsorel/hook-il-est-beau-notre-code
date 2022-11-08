@@ -1,0 +1,59 @@
+:toc:
+
+= Conclusions
+
+image::assets/Pensieve_merged_black-blueish.png[]
+
+À ramener dans votre pensine...
+
+[.notes]
+--
+TODO : à finir par Luc et Jérôme
+--
+
+[%notitle]
+== Ce que nous avons vu
+
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] qualité de code
+--[#lightyellow] organisation
+--- communauté de pratiques
+--- conventions
+--[#lightyellow] outillage
+--- pas d'outil -> dans l'oubli
+--- guide la découverte de pratiques
+--- du commit à la production
+++[#lightyellow] pre-commit
++++ framework multi-langages
++++ configuration
+++++ .pre-commit-config.yaml
+++++ hook
++++++ diversité
+++++++ hooks natifs
+++++++ outils existants
++++++ pyproject.toml
++++++ fichier dédié
+++++ utilisée par IDE
++++ sur-couche git
+++++ 🙅‍♀️ no-shell
+++++ ⚠️ git dans\nl'intégration continue
++++ API
+++++ commandes
+--[#lightyellow] ⚠️ méthode
+--- compatibilité des effets des outils
+--- élaboration des règles
+---- communautés de pratiques
+---- compromis
+---- bonnes pratiques\nportées par les outils
+---- à moduler par\nle domaine métier
+@endmindmap
+----
+
+== Merci !
+
+Des questions ?
+
+Des retours d'expérience ?

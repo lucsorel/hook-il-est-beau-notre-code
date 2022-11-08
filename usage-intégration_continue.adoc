@@ -1,0 +1,37 @@
+:toc:
+= Pre-commit en intégration continue
+
+== La commande du mal
+
+[source,bash]
+----
+git commit --no-verify -m "🥷 ahahaha !"
+----
+
+-> lancer les hooks dans l'intégration continue aussi
+
+== Étape de lint dans l'intégration continue 1/2
+
+Pre-commit repose sur git :
+
+* installer git sur le serveur qui lance le job de lint
+* initialisation minimale git du projet
+
+[source,bash]
+----
+apt-get install --no-install-recommends -y git
+cd my-project
+git init .
+git add -A
+poetry run pre-commit run --all-files
+----
+
+
+== Étape de lint dans l'intégration continue 2/2
+
+Ou avec Docker
+
+[source,bash]
+--
+docker run --rm -v $(pwd):/data fxinnovation/pre-commit run -a
+--

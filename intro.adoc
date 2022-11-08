@@ -1,0 +1,233 @@
+:toc:
+
+= Qualité de code - du commit à la prod'
+
+[%notitle]
+== Quelque part dans un openspace de la startup nation...
+
+image::assets/rideau_théâtre-jaune.jpg[background, size=cover]
+
+[quote]
+--
+_Quelque part dans un openspace_
+
+_de la startup nation..._
+--
+
+[.notes]
+--
+Proposition d'un petit sketch d'intro
+
+Luc :
+
+> Alors une nouvelle US... Hop hop, je code... Hop hop, je teste... vite fait...
+
+> Hey Jérôme, veux-tu bien relire ma PR s'il te plaît ?
+
+Jérôme :
+
+> Oui oui...
+
+> Mais, c'est n'imp' tes imports, là : tu importes un module du projet avant un module natif, ce n'est pas réglo...
+
+> et puis là, c'est une bibliothèque tierce !
+
+> Comment veux-tu qu'on s'y retrouve ?!?
+
+Jérôme sors un mètre à mesurer et le pose sur l'écran
+
+> Mais dis donc, ta ligne fait plus de 120 caractères !
+> Et puis qu'est-ce que c'est que ces strings avec des guillemets doubles à côté des autres strings avec des guillemets simples.
+> C'est tout mélangé...
+> C'est la fête du string, c'est ça ?
+
+> Rhooo ! Et ce dictionnaire au formatage tout dégueux... Dis, ça n'est pas pour rien qu'on fait des réunions de conventions de code. Aller reformate-moi tout ça et on en reparle.
+
+Jérôme s'en va
+
+Luc :
+
+> Mais, mais... Mais on n'a même pas parlé du code métier...
+--
+
+== Qualité de code, conventions et relectures
+
+Pourquoi nous relisons-nous ?
+
+[%step]
+* le code doit rendre le service métier attendu
+* perpétuer la robustesse et la maintenabilité du service numérique
+
+[.notes]
+--
+Qui a déjà vécu une scène similaire ?
+
+Des scènes de relecture de code comme ça, il y en a plein.
+
+L'objectif d'une relecture est de valider que le code rende le service métier attendu tout en assurant une robustesse et une maintenabilité du service numérique.
+--
+
+
+== Vers une base de code robuste et maintenable 1/3
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] base de code\nrobuste & maintenable
+++[#yellow] conventions de code
++++ homogénéité
+++++ de style
++++++ formatage
++++++ docstring
+++++ de (bonnes) pratiques
++++ intégration facile
+++++ de nouvelles personnes
+++++ de votre futur vous
+@endmindmap
+----
+
+[.notes]
+--
+* de style : formatage, docstring
+* bonnes pratiques : erreurs courantes comme des pb d'encodage non spécifiés, détection d'anti-patterns, documentation manquante de modules ou de fonctions
+* nouvelle personne : ou vous dans 3 mois
+--
+
+== Vers une base de code robuste et maintenable 2/3
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] base de code\nrobuste & maintenable
+--[#lightyellow] conventions de code
+--- homogénéité
+---- de style
+----- formatage
+----- docstring
+---- de (bonnes) pratiques
+--- intégration facile
+---- de nouvelles personnes
+---- de votre futur vous
+++[#yellow] tests automatisés
++++ confiance dans la base de code
++++ documente l'utilisation du code
+@endmindmap
+----
+
+[.notes]
+--
+* documentation : entrées et sorties de fonctions, cas d'erreur gérés
+--
+
+== Vers une base de code robuste et maintenable 3/3
+
+[plantuml, target=mindmap-diagram, format=svg]
+----
+@startmindmap
++[#lightblue] base de code\nrobuste & maintenable
+--[#lightyellow] conventions de code
+--- homogénéité
+---- de style
+----- formatage
+----- docstring
+---- de (bonnes) pratiques
+--- intégration facile
+---- de nouvelles personnes
+---- de votre futur vous
+++[#yellow] intégration continue
++++ validations humaines
+++++ relecture de tâches
+++++ story keeping de user stories
++++[#lightgreen] vérifications automatisées
+++[#lightyellow] tests automatisés
++++ confiance dans la base de code
++++ documente l'utilisation du code
+@endmindmap
+----
+
+== Vérifications automatisées
+
+Que connaissez-vous comme vérifications automatisées de la qualité de code ?
+
+
+[%step]
+* tests automatisés
+** en contrôlant la couverture de code : `pytest-cov`
+** en contrôlant la conso mémoire : `memray`
+* analyse statique de code
+** respect de formatage : `isort`, `black`, `yapf`
+** détection d'antipatterns : `pylint`, `flake8`, `ruff`, `perflint`
+
+[.notes]
+--
+L'analyse statique est souvent faite par un outil comme sonar, qui se déroule souvent une fois que le commit est parti.
+--
+
+== Et si l'analyse statique commençait au commit ?
+
+_(juste avant, en fait...)_
+
+[.notes]
+--
+C'est un peu dommage, on ne va pas faire une palanquée de commits pour arriver à un code satisfaisant (c'est un peu le défaut d'une mise en place d'intégration continue).
+--
+
+== Les hooks git
+
+Conditionne une action git "classique" à la bonne exécution d'un script.
+
+[source,text]
+----
+super-projet
+  ├─ .git
+  │  └─ hooks/
+  │     ├─ commit-msg.sample
+  │     ├─ pre-commit.sample 👀
+  │     ├─ pre-push.sample
+  │     ├─ pre-receive.sample
+  │     └─ ...
+----
+
+
+* retirer `.sample` pour activer le hook
+* le contexte d'exécution est la racine du projet git, pas `.git/hooks`
+
+[.notes]
+--
+Un hook de pré-commit semble être le bon moment avant que l'éventuelle honte quitte l'intimité de notre poste de travail et se répande dans l'intégration continue et la production.
+--
+
+== Example de hook de pre-commit
+
+
+[source, bash]
+----
+# 📄 .git/hooks/pre-commit
+#!/bin/sh
+echo "Pre-commit hook launched in $(pwd)"
+
+# simulates an error code at exit
+exit 1
+----
+
+[source, bash]
+----
+mkdir super-projet
+cd super-projet
+git init -b main
+git config ...
+
+git touch test
+git add test
+git status
+git commit -m "🎉"
+git status
+----
+
+== Comment mutualiser les hooks ?
+
+[%step]
+* créer un dossier contenant les hooks (`.git_hooks`, par exemple)
+** 👎 faire un lien symbolique entre `.git_hooks` et .git/hooks
+** 👍 OU configurer git pour y chercher les hooks : `git config core.hooksPath ./.git_hooks`
+* 👍👍 utiliser un outil qui va gérer la _tambouille_ entre les hooks git et les outils de vérification : `pre-commit`

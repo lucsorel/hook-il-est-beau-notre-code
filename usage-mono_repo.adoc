@@ -1,0 +1,41 @@
+= Utilisation de pre-commit dans un mono-repo
+
+Dans le cas où pre-commit n'est utilisé que par les sous-projets Python
+
+Rappels :
+
+* pre-commit utilise la mécanique des hooks git
+* le dossier de travail des hooks est donc la racine du mono-repo
+
+== Script de compilation pour câbler les hooks git à pre-commit
+
+* utiliser des `Makefile`s avec une commande `make lint` racine qui appelle les `make lint` de chaque sous-projet
+* le `make lint` du projet Python lance pre-commit
+
+[source, Makefile]
+----
+lint:
+# vérifie qu'il y a des fichiers modifiés dans le sous-projet
+ifneq ($(shell git diff-index --quiet HEAD ./; echo $$?), 0)
+  poetry run pre-commit run --all-files
+endif
+----
+
+== Une configuration pre-commit par sous-projet
+
+[source,yaml]
+----
+files: ^a-python-subproject/
+
+repos:
+-   repo: https://github.com/pre-commit/mirrors-yapf
+    rev: v0.32.0
+    hooks:
+    -   id: yapf
+        name: Yapf
+        # this dependency is necessary if the python project is configured with a pyproject.toml
+        additional_dependencies: [toml]
+        # goes in the sub-project and checks the format of the production and test codes
+        entry: sh -c "cd a-python-subproject \
+            && yapf --in-place -vv --recursive a_python_subproject tests"
+----
